@@ -1,8 +1,8 @@
 module.exports.config = {
-  name: "pair3",
+  name: "pair2",
   version: "1.0.0",
   hasPermssion: 0,
-  credits: "ARIF BABU",
+  credits: "Khoa",
   description: "It's a compound :>",
   commandCategory: "Giải trí",
   usages: "",
@@ -20,7 +20,7 @@ module.exports.run = async function ({ args, Users, Threads, api, event, Currenc
   let pathImg = __dirname + "/cache/background.png";
   let pathAvt1 = __dirname + "/cache/Avtmot.png";
   let pathAvt2 = __dirname + "/cache/Avthai.png";
-
+  
   var id1 = event.senderID;
   var name1 = await Users.getNameUser(id1);
   var ThreadInfo = await api.getThreadInfo(event.threadID);
@@ -55,14 +55,14 @@ module.exports.run = async function ({ args, Users, Threads, api, event, Currenc
   var cc = ["0", "-1", "99,99", "-99", "-100", "101", "0,01"];
   var rd2 = cc[Math.floor(Math.random() * cc.length)];
   var djtme = [`${rd1}`, `${rd1}`, `${rd1}`, `${rd1}`, `${rd1}`, `${rd2}`, `${rd1}`, `${rd1}`, `${rd1}`, `${rd1}`];
-
+  
   var tile = djtme[Math.floor(Math.random() * djtme.length)];
 
   var background = [
-  "https://i.imgur.com/mHAHENR.jpg",
+  "https://i.ibb.co/RrHNg50/Prince.jpg",
   ];
   var rd = background[Math.floor(Math.random() * background.length)];
-
+  
   let getAvtmot = (
     await axios.get(
       `https://graph.facebook.com/${id1}/picture?width=720&height=720&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`,
@@ -92,13 +92,13 @@ module.exports.run = async function ({ args, Users, Threads, api, event, Currenc
   let canvas = createCanvas(baseImage.width, baseImage.height);
   let ctx = canvas.getContext("2d");
   ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
-  ctx.drawImage(baseAvt1, 230, 250, 240, 327);
-  ctx.drawImage(baseAvt2, 725, 245, 240, 330);
+  ctx.drawImage(baseAvt1, 45, 60, 200, 250);
+  ctx.drawImage(baseAvt2, 320, 240, 200, 250);
   const imageBuffer = canvas.toBuffer();
   fs.writeFileSync(pathImg, imageBuffer);
   fs.removeSync(pathAvt1);
   fs.removeSync(pathAvt2);
-  return api.sendMessage({ body: `🍫${name1}🍫\n🍫${name2}🍫\n✧═══•❁『${tile}%』❁•═══✧`,
+  return api.sendMessage({ body: `𝐎𝐖𝐍𝐄𝐑 ➻ 𝐌𝐑.𝐊𝐑𝐈𝐒𝐇𝐍𝐀🍒💖\n✦ ━━━━━━━ 💝 ━━━━━━━ ✦\n💞💥🩵[ ${name1} ]🩵✨💞\n✦ ━━━━━━━ 💝 ━━━━━━━ ✦\n🍒💞💌🇱‌🇴‌🇻‌🇪‌ 🇾‌🇴‌🇺‌💌💞🍒\n✦ ━━━━━━━ 💝 ━━━━━━━ ✦\n✨😻💞[ ${name2} ]✨💥💞\n✧═══•❁『${tile}%』❁•═══✧`,
             mentions: [{
           tag: `${name2}`,
           id: id2
