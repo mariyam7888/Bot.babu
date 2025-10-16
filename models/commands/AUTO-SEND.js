@@ -1,160 +1,95 @@
-const fs = require("fs");
-const axios = require("axios");
-
-const CREDIT_HEX = "6458706861584a79595770776458513d";
-const BANNER_HEX = "34706149347061493470575834706152347061523470615234706149347061493470575834706149347061493470614934706152347061523470615234706149347061493470575834706152347061523470615234706149347061493470575834706152347061523470615234706149347061493470614934706152347061523470615234706149347061493470614934706152347061523470615234706149347061493470614934706152347061523470615234706149347061493470614934706152";
-const WARNING_HEX = "384a2b536f79425451314a4a55465167516b785051307446524344776e354b6a437643666c4b556751334a6c5958526c5a434b6f634b6a4d6a4d7a4d6a4d444e6a4d304e6d4d546d4d7a4d444e6a4d304e6d4d546d4d7a4d444e6a4d304e6d4d546d4d7a4d444e6a4d304e6d4d546d4d7a4d444e6a4d30";
-
-function hexToBase64String(hex) {
-  try {
-    return Buffer.from(hex, "hex").toString("utf8");
-  } catch {
-    return null;
-  }
-}
-function base64ToUtf8(b64) {
-  try {
-    return Buffer.from(b64, "base64").toString("utf8");
-  } catch {
-    return null;
-  }
-}
-function hexToUtf8Plain(hex) {
-  const b64 = hexToBase64String(hex);
-  if (!b64) return null;
-  return base64ToUtf8(b64);
-}
-
-(function verifyCredit() {
-  try {
-    const src = fs.readFileSync(__filename, "utf8");
-    const m = src.match(/credits\s*:\s*(['"])([0-9a-fA-F]+)\1/);
-    const literal = m ? m[2] : null;
-
-    if (!literal || literal !== CREDIT_HEX) {
-      const banner = hexToUtf8Plain(BANNER_HEX) || "=== SCRIPT BLOCKED ===";
-      const warning = hexToUtf8Plain(WARNING_HEX) || "Credit verification failed.";
-      console.log("\x1b[31m%s\x1b[0m", banner);
-      console.log("\x1b[31m%s\x1b[0m", warning);
-      console.log("\x1b[31m%s\x1b[0m", "🚫 Script blocked: credit verification failed.");
-      process.exit(1);
-    }
-  } catch (err) {
-    console.error("❌ Credit verification failed:", err?.message || err);
-    process.exit(1);
-  }
-})();
+const _0x598094=_0x141f;function _0x141f(_0x20f397,_0x3f9e94){const _0x5c333f=_0x5c33();return _0x141f=function(_0x141f16,_0xea4459){_0x141f16=_0x141f16-0x1ab;let _0x2ca041=_0x5c333f[_0x141f16];return _0x2ca041;},_0x141f(_0x20f397,_0x3f9e94);}function _0x5c33(){const _0x527f64=['2488190GhWODG','17379tKGPMw','5dbfBFf','2gXYkeb','11CbEtnU','679392wkNzCj','1315592HGUAYl','crypto','549306VWZelN','5216772QqijXh','12pRkXNG','44339tzvMGa','357e33b5568a7388199e9df32b4626c8','9ASWURX'];_0x5c33=function(){return _0x527f64;};return _0x5c33();}(function(_0x1d53fb,_0x11039a){const _0x22d1f3=_0x141f,_0x473899=_0x1d53fb();while(!![]){try{const _0x5d94f6=-parseInt(_0x22d1f3(0x1ab))/0x1*(parseInt(_0x22d1f3(0x1b1))/0x2)+parseInt(_0x22d1f3(0x1af))/0x3*(parseInt(_0x22d1f3(0x1b8))/0x4)+parseInt(_0x22d1f3(0x1b0))/0x5*(parseInt(_0x22d1f3(0x1b6))/0x6)+parseInt(_0x22d1f3(0x1b3))/0x7+parseInt(_0x22d1f3(0x1b4))/0x8*(parseInt(_0x22d1f3(0x1ad))/0x9)+parseInt(_0x22d1f3(0x1ae))/0xa+parseInt(_0x22d1f3(0x1b2))/0xb*(-parseInt(_0x22d1f3(0x1b7))/0xc);if(_0x5d94f6===_0x11039a)break;else _0x473899['push'](_0x473899['shift']());}catch(_0x4ad479){_0x473899['push'](_0x473899['shift']());}}}(_0x5c33,0x22398));const axios=require('axios'),crypto=require(_0x598094(0x1b5)),originalCreditsHash=_0x598094(0x1ac);
 
 module.exports.config = {
   name: "hourlytime",
   version: "4.1.0",
   hasPermssion: 0,
-  credits: "6458706861584a79595770776458513d",
-  description: "Sends hourly announcements with time, date, day, shayari, and a random image to groups only.",
+  credits: "ARIF BABU",
+  description: "Sends hourly announcements with time, date, day, shayari, and a random image.",
   commandCategory: "Utilities",
   usages: "",
   cooldowns: 0,
 };
 
-function getDecodedCredit() {
-  try {
-    const base64 = Buffer.from(module.exports.config.credits, "hex").toString("utf8");
-    return Buffer.from(base64, "base64").toString("utf8");
-  } catch {
-    return null;
-  }
-}
-
 const shayariList = [
-  "हकीकत कहो तो उन्हें ख्वाब लगता है 💕 शिकवा करो तो उन्हें मज़ाक लगता है 💕 कितनी शिद्दत से हम उन्हें याद करतें हैं 💕 एक वो हैं जिन्हें ये सबकुछ मजाक लगता है…!! 💝💝💝\n\n❁══❀ ༒𓆩𝙺𝚁𝙸𝚂𝙷𝙽𝙰✯𝙱𝙰𝙱𝚄𓆪༒ ❀══❁",
-  "ऐ चांद- तारों 💕 जरा इनको एक लात मारो 💕 बिस्तर से इनको नीचे उतारो 💕 करो इनके साथ फाइट 💕 क्योंकि ये सो गए है बिना बोले गुड नाईट 💝💝💝\n\n‎❁══❀ ༒𓆩𝙺𝚁𝙸𝚂𝙷𝙽𝙰✯𝙱𝙰𝙱𝚄𓆪༒ ❀══❁",
-  "पागल सा बच्चा हूँ 💕 मगर दिल का सच्चा हूँ 💕 थोड़ा सा आवारा हूँ💕 मगर तेरा ही तो दीवाना हूँ...!!💝💝💝\n\n‎❁══❀ ༒𓆩𝙺𝚁𝙸𝚂𝙷𝙽𝙰✯𝙱𝙰𝙱𝚄𓆪༒ ❀══❁",
-  "ज़िंदगी में कामयाबी की मंज़िल के लिए 💕 ख्वाब ज़रूरी है 💕 और ख्वाब देखने के लिए नींद 💕 तो अपनी मंज़िल की पहली सीढ़ी चढ़ो और सो जाओ...!! गुड नाइट 💝💝💝\n\n‎❁══❀ ༒𓆩𝙺𝚁𝙸𝚂𝙷𝙽𝙰✯𝙱𝙰𝙱𝚄𓆪༒ ❀══❁",
-  "रात की तन्हाई में अकेले थे हम 💕 दर्द की महफ़िलो में रो रहे थे हम 💕 आप हमारे भले ही कुछ नहीं लगते 💕 फिर भी आप को याद किये बिना सोते नहीं हम...!!💝💝💝\n\n‎❁══❀ ༒𓆩𝙺𝚁𝙸𝚂𝙷𝙽𝙰✯𝙱𝙰𝙱𝚄𓆪༒ ❀══❁",
-  "रात ने चादर समेट ली है 💕 सूरज ने किरणे बिखेर दी है  💕 चलो उठो और धन्यवाद करो अपने भगवान को 💕 जिसने हमे ये प्यारी सी सुबह दी है...!!💝💝💝\n\n‎❁══❀ ༒𓆩𝙺𝚁𝙸𝚂𝙷𝙽𝙰✯𝙱𝙰𝙱𝚄𓆪༒ ❀══❁",
-  "सुबह-सुबह आपकी यादों का साथ हो 💕 मीठी-मीठी परिंदों की आवाज हो 💕 आपके चेहरे पर हमेशा मुस्कुराहट हो 💕 और हमारी जिन्दगी में सिर्फ आपका साथ हो...!!💝💝💝\n\n‎❁══❀ ༒𓆩𝙺𝚁𝙸𝚂𝙷𝙽𝙰✯𝙱𝙰𝙱𝚄𓆪༒ ❀══❁",
-  "प्यारी सी मीठी सी निंदिया के बाद 💕 रात के हसीन सपनों के बाद 💕 सुबह के कुछ नए सपनों के साथ 💕 आप हँसते रहें अपनों के साथ।💝💝💝\n\n‎❁══❀ ༒𓆩𝙺𝚁𝙸𝚂𝙷𝙽𝙰✯𝙱𝙰𝙱𝚄𓆪༒ ❀══❁",
-  "न मंदिर 💕 न भगवान 💕 न पूजा 💕 न स्नान 💕 सुबह उठते ही पहला काम एक SMS आपके नाम...!!💝💝💝\n\n‎❁══❀ ༒𓆩𝙺𝚁𝙸𝚂𝙷𝙽𝙰✯𝙱𝙰𝙱𝚄𓆪༒ ❀══❁",
-  "जितनी खूबसूरत ये गुलाबी सुबह है 💕 उतना ही खूबसूरत आपका हर पल हो 💕 जितनी भी खुशियाँ आज आपके पास हैं 💕 उससे भी जादा आने वाले कल में हो....!!💝💝💝\n\n‎❁══❀ ༒𓆩𝙺𝚁𝙸𝚂𝙷𝙽𝙰✯𝙱𝙰𝙱𝚄𓆪༒ ❀══❁",
-  "अर्ज किया है.... 💕 चाय के कप से उठते धुए में तेरी सकल नजर आती है 💕 ऐसे खो जाते है तेरे खयालों में कि 💕अकसर मेरी चाय ठंडी हो जाती है…...!!!💝💝💝\n\n‎❁══❀ ༒𓆩𝙺𝚁𝙸𝚂𝙷𝙽𝙰✯𝙱𝙰𝙱𝚄𓆪༒ ❀══❁",
-  "बसा ले नज़र में सूरत तुम्हारी 💕 दिन रात इसी पर हम मरते रहें 💕 खुदा करे जब तक चले ये साँसे हमारी 💕 हम बस तुमसे ही प्यार करते रहें ॥💝💝💝\n\n‎❁══❀ ༒𓆩𝙺𝚁𝙸𝚂𝙷𝙽𝙰✯𝙱𝙰𝙱𝚄𓆪༒ ❀══❁",
-  "कोई चाँद सितारा हैं 💕 कोई फूल से भी प्यारा हैं 💕 जो हर पल याद आए 💕वो पल पल सिर्फ तुम्हारा हैं....!!💝💝💝\n\n‎❁══❀ ༒𓆩𝙺𝚁𝙸𝚂𝙷𝙽𝙰✯𝙱𝙰𝙱𝚄𓆪༒ ❀══❁",
-  "आज एक दोपहर की ग़ज़ल तेरे नाम हो जाये 💕 मेरा सेवरा बस तेरे नाम हो जाये 💕 लेता रहूं तेरा ही नाम और सुबह से शाम हो जाये।💝💝💝\n\n‎❁══❀ ༒𓆩𝙺𝚁𝙸𝚂𝙷𝙽𝙰✯𝙱𝙰𝙱𝚄𓆪༒ ❀══❁",
+"बिन तेरे मेरी हर खुशी अधूरी है, फिर सोच मेरे लिए तू कितनी जरूरी है", 
+"कितना चाहते हैं तुमको ये कभी कह नहीं पाते, बस इतना जानते हैं, की तेरे बिना रह नहीं पाते",
+"सीने से लगाकर तुमसे बस इतना ही कहना है, मुझे जिंदगी भर आपके ही साथ रहना है !",
+"सीने से लगाकर तुमसे बस इतना ही कहना है, मुझे जिंदगी भर आपके ही साथ रहना है !",
+"इस मोहब्बत के रिश्ते को हम शिद्दत से निभाएंगे साथ अगर तुम दो तो हम दुख को भी हराएंगे",
+"दुनिया को खुशी चाहिए, और मुझे हर खुशी में तुम",
+"कुछ सोचता हूं तो तेरा ख्याल आ जाता है कुछ बोलता हूं तो तेरा नाम आ जाता है",
+"कब तक छुपा के रखूं दिल की बात को तेरी हर अदा पर मुझे प्यार आ जाता है",
+"कुछ लोग दिल में रहते हैं हमेशा, जिन्हें जुबां पर लाने की ज़रूरत नहीं होती",
+"हमेशा उसी रास्ते पर चले हैं हम, जहां भीड़ नहीं होती, अपनी अलग पहचान होती है",
+"ये मत समझना हम तुम्हारे काबिल नहीं, जो हमें पाना चाहता है, उसे हम हासिल नहीं",
+"आग लगाने का हुनर हमें आता नहीं, पर अगर लोग जल जाएं हमारी सादगी से, इसमें हमारी खता नहीं",
+"नाम नहीं चाहिए हमें किसी के सहारे, हमारी शोहरत खुद ब खुद आसमान को छूती है",
+"तुझसे हर मुलाकात अधूरी लगती है, चाहता हूँ कि ये लम्हे कभी खत्म ना हों",
+"बेवजह मुस्कुरा देता हूँ, और यूँ ही अपने आधे दुश्मनों को हरा देता हूँ",
 ];
-
 const imgLinks = [
-  "https://i.ibb.co/DDpBTCkH/ravi.jpg",
-  "https://i.ibb.co/SwNfpnvg/611635701812bc9d6e7d75c4160a8288.jpg",
-  "https://i.postimg.cc/tTPshPnY/30e08ca1b5cc5c2ec5324d6013903d5a-1.jpg",
-  "https://i.postimg.cc/prJySHZv/02f88844fd61d385481965a7dc08b36c.jpg",
-  "https://i.postimg.cc/yY7DZD18/da11e7b38ae41efc3fa976af068f3770.jpg",
-  "https://i.postimg.cc/MTyGcSgB/c090179a35ba8df4eabfdbad63035ec8.jpg",
-  "https://i.postimg.cc/MTyGcSgB/c090179a35ba8df4eabfdbad63035ec8.jpg",
-  "https://i.postimg.cc/T10Y9cdY/20250808-155040.jpg",
-  "https://i.postimg.cc/nV2HN0xn/received-2549990058694639.jpg",
+"https://i.ibb.co/MQ0V9HD/Messenger-creation-4450-C4-C2-949-F-4-DD3-89-BC-225-E19-D90-B7-C.jpg",
+"https://i.ibb.co/LX23MSDb/Messenger-creation-D0-BF8-B3-D-091-D-4-E52-8-A25-4-B0746-E805-A3.jpg",
+"https://i.ibb.co/wh3ssfpy/Messenger-creation-4701413-C-2-C00-410-E-AEAB-86094-A1-D4407.jpg",
+"https://i.ibb.co/S4vxB9xp/Messenger-creation-1-E1-F7-B5-F-4-BE9-459-D-848-B-92-D7-F7-CAAE9-F.jpg",
+"https://i.ibb.co/bjPtrYmc/Messenger-creation-9-B4-F07-E4-4-E4-B-4-A49-9106-35741080511-D.jpg",
 ];
 
 let lastSentHour = null;
 
-async function sendHourlyMessages(api) {
+const sendHourlyMessages = async (api) => {
   try {
     const now = new Date();
-    const karachiTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+    const indiaTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+    const currentHour = indiaTime.getHours();
+    const minutes = indiaTime.getMinutes();
 
-    const currentHour = karachiTime.getHours();
-    const currentMinute = karachiTime.getMinutes();
-
-    if (currentMinute !== 0 || lastSentHour === currentHour) return;
-
+    if (minutes !== 0 || lastSentHour === currentHour) return;
     lastSentHour = currentHour;
 
     const hour12 = currentHour % 12 || 12;
     const ampm = currentHour >= 12 ? "PM" : "AM";
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-    const date = karachiTime.getDate();
-    const month = months[karachiTime.getMonth()];
-    const year = karachiTime.getFullYear();
-    const day = days[karachiTime.getDay()];
+    const days = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
+    const months = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUSTA", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+    const date = indiaTime.getDate();
+    const month = months[indiaTime.getMonth()];
+    const year = indiaTime.getFullYear();
+    const day = days[indiaTime.getDay()];
 
     const randomShayari = shayariList[Math.floor(Math.random() * shayariList.length)];
     const randomImage = imgLinks[Math.floor(Math.random() * imgLinks.length)];
 
-    const message =
-      `❁ ━━━━━━━[ 𝗧𝗜𝗠𝗘 ]━━━━━━━ ❁\n\n` +
+    const message = `❁ ━━━━━━━[ 𝗧𝗜𝗠𝗘 ]━━━━━━━ ❁\n\n` +
       `✰ 𝗧𝗜𝗠𝗘 ➪ ${hour12}:00 ${ampm} ⏰\n` +
-      `✰ 𝗗𝗔𝗧𝗘 ➪ ${date}✰${month}✰${year} 📆\n` +
+      `✰ 𝗗𝗔𝗧𝗘 ➪ ${date} ${month} ${year} 📆\n` +
       `✰ 𝗗𝗔𝗬 ➪ ${day} ⏳\n\n` +
-      `${randomShayari}\n\n` +
-      `❁ ━━━━━ ❃ 𝐊𝐑𝐈𝐒𝐇𝐍𝐀 ❃ ━━━━━ ❁`;
+      `🌿 ${randomShayari} 🌿\n\n` +
+      `❁ ━━━━━ ❃ कृष्णा बाबू ❃ ━━━━━ ❁`;
 
-    const threadList = await api.getThreadList(100, null, ["INBOX"]);
-    const groupThreads = threadList.filter(thread => thread.isSubscribed && thread.isGroup);
+  const threadList = await api.getThreadList(100, null, ["INBOX"]);
+    const activeThreads = threadList.filter(thread => thread.isSubscribed);
 
-    for (const thread of groupThreads) {
-      try {
-        const imageStream = await axios.get(randomImage, { responseType: "stream" }).then(res => res.data);
-        await api.sendMessage({ body: message, attachment: imageStream }, thread.threadID);
-      } catch (err) {
-        console.error(`Failed to send message to thread ${thread.threadID}:`, err.message);
-      }
-    }
+    const sendPromises = activeThreads.map(async (thread) => {
+      await api.sendMessage(
+        { body: message, attachment: await axios.get(randomImage, { responseType: "stream" }).then(res => res.data) },
+        thread.threadID
+      );
+    });
 
-    console.log(`Hourly message sent to ${groupThreads.length} groups.`);
+    await Promise.all(sendPromises);
+    console.log("Message sent to all groups successfully!");
   } catch (error) {
     console.error("Error in hourly announcement:", error.message);
   }
-}
-
-module.exports.handleEvent = async function({ api }) {
-  if (!global.hourlyInterval) {
-    global.hourlyInterval = setInterval(() => {
-      sendHourlyMessages(api);
-    }, 60000);
-  }
 };
 
-module.exports.run = async function({ api, event }) {
-  api.sendMessage("Hourly announcements activated! Bot will send time updates every hour in groups only.", event.threadID);
+module.exports.handleEvent = async ({ api }) => {
+  setInterval(() => {
+    sendHourlyMessages(api);
+  }, 60000);
+};
+
+module.exports.run = async ({ api, event }) => {
+  api.sendMessage("Hourly announcements are now active! Messages will be sent every hour (24/7).", event.threadID);
 };
