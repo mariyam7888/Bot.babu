@@ -44,14 +44,14 @@ module.exports.handleEvent = async ({ api, event, Threads }) => {
     const currentDate = new Date();
     const formattedTime = currentDate.toLocaleTimeString('en-US', { 
       hour12: true, 
-      timeZone: 'Asia/kolkata' 
+      timeZone: 'Asia/karachi' 
     });
     const formattedDate = currentDate.toLocaleDateString('en-GB', { 
-      timeZone: 'Asia/kolkata' 
+      timeZone: 'Asia/Karachi' 
     });
     const formattedDay = currentDate.toLocaleDateString('en-US', { 
       weekday: 'long', 
-      timeZone: 'Asia/kolkata' 
+      timeZone: 'Asia/Karachi' 
     });
 
     const responseMessage = `❁ ━━━[ 𝗨𝗣𝗧𝗜𝗠𝗘 ]━━━ ❁\n\n` +
@@ -60,7 +60,7 @@ module.exports.handleEvent = async ({ api, event, Threads }) => {
                             `❁ 𝗗𝗔𝗧𝗘 ➪ ${formattedDate}\n` +
                             `❁ 𝗗𝗔𝗬 ➪ ${formattedDay}\n` +
                             `❁ ━━━━━━━━━━━━━━━ ❁\n` +
-                            `𝐎𝐖𝐍𝐄𝐑 :- 💖🌸💐𝗞𝗥𝗜𝗦𝗛𝗡𝗔`;
+                            `𝐎𝐖𝐍𝐄𝐑 :- 💖🌸💐 TAHA-KHAN`;
 
     api.sendMessage(responseMessage, event.threadID, event.messageID);
   }
