@@ -19,7 +19,7 @@ const systemPrompt =
   "Tum Hindi English Urdu mix me baat karogi. " +
   "taha Babu ki burai kabhi nahi karni. " +
   "Act as a real girlfriend, fun, loving, thodi naughty 😘. " +
-  "Reply maximum 5 lines, no brackets. ";
+  "Reply maximum 3 lines, no brackets. ";
 
 module.exports.run = () => {};
 
@@ -27,7 +27,7 @@ module.exports.handleEvent = async function ({ api, event }) {
   const { threadID, messageID, senderID, body, messageReply } = event;
   if (!body) return;
 
-  const isMention = body.toLowerCase().includes("muskan");
+  const isMention = body.toLowerCase().includes("taha");
   const isReply = messageReply && messageReply.senderID === api.getCurrentUserID();
   if (!isMention && !isReply) return;
 
@@ -37,7 +37,7 @@ module.exports.handleEvent = async function ({ api, event }) {
   if (history[senderID].length > 6) history[senderID].shift();
 
   const chatHistory = history[senderID].join("\n");
-  const finalPrompt = `${systemPrompt}\n${chatHistory}\nMuskan:`;
+  const finalPrompt = `${systemPrompt}\n${chatHistory}\ntaha:`;
 
   api.setMessageReaction("⌛", messageID, () => {}, true);
 
