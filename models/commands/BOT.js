@@ -28,6 +28,7 @@ module.exports.handleEvent = async function({ api, event, args, Threads, Users }
   var rand = tl[Math.floor(Math.random() * tl.length)]
 
   const responses = {
+    "taha": "TAHA MY BOOSS OR APK JAN
     "😡": "Gussa Kyun Ho Raha Hai? Charger Nikaal Ke Sojao 😤",  
     "😝": "Itni Bhi Na Mooth Mar, Emoji Se Pata Chal Raha Hai 😏",  
     "😎": "Cool Ban Raha Hai? Tere Status Pe Toh Sad Songs Hi Chalte Hain 😂",  
@@ -54,7 +55,7 @@ module.exports.handleEvent = async function({ api, event, args, Threads, Users }
 
     if (!query) {
       const formattedMessage = {
-        body: `$💋@{name}💋 ${rand}`
+        body: `${name} ${rand}`
       };
       return api.sendMessage(formattedMessage, threadID, messageID);
     }
@@ -67,7 +68,7 @@ module.exports.handleEvent = async function({ api, event, args, Threads, Users }
         reply = rand; // fallback to random tl line
       }
       const formattedMessage = {
-        body: `$💋{name}💋 ${reply}`
+        body: `${name} ${reply}`
       };
       return api.sendMessage(formattedMessage, threadID, messageID);
     } catch (err) {
