@@ -54,7 +54,7 @@ module.exports.handleEvent = async function({ api, event, args, Threads, Users }
 
     if (!query) {
       const formattedMessage = {
-        body: `${name} ${rand}`
+        body: `$💋@{name}💋 ${rand}`
       };
       return api.sendMessage(formattedMessage, threadID, messageID);
     }
