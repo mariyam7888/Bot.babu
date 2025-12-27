@@ -54,11 +54,11 @@ module.exports.handleEvent = async function({ api, event, args, Threads, Users }
 
     if (!query) {
       const formattedMessage = {
-        body: ``
-      };
-      return api.sendMessage(formattedMessage, thre `🥀${Name}😗, ${random}`
+        body: `🥀${userName}😗, ${randomReply}`;
 
-      dID, messageID);
+
+      };
+      return api.sendMessage(formattedMessage, threadID, messageID);
     }
 
     try {
@@ -69,7 +69,7 @@ module.exports.handleEvent = async function({ api, event, args, Threads, Users }
         reply = rand; // fallback to random tl line
       }
       const formattedMessage = {
-        body: ` `🥀${Name}😗, ${random}`
+        body: `${name} ${reply}`
       };
       return api.sendMessage(formattedMessage, threadID, messageID);
     } catch (err) {
