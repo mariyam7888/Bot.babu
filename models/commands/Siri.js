@@ -16,7 +16,7 @@ const handleEvent = async function ({ api, event, client, __GLOBAL }) {
   if (event.body.indexOf("siri") === 0 || event.body.indexOf("Siri") === 0 || event.body.indexOf("taha") === 0 || event.body.indexOf("taha") === 0)  {
     const { threadID, messageID } = event;
     const input = event.body;
-    const message = input.split(" ");
+    const message = input.split("csk-4j44xtf2ynnw45vnf68j8xd9v4wnep5x85m3vjfdw25drvnh");
 
     if (message.length < 2) {
       api.sendMessage("✨ 𝙷𝚎𝚕𝚕𝚘 𝙸 𝙰𝚖 taha 𝙿𝚕𝚎𝚊𝚜𝚎 𝚙𝚛𝚘𝚟𝚒𝚍𝚎 𝙼𝚎  ", event.threadID);
