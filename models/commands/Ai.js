@@ -6,7 +6,7 @@ module.exports.config = {
   hasPermssion: 0,
   credits: 'TAHA BABU',
   description: 'Muskan AI (Pollinations)',
-  commandCategory: 'ai',
+  commandCategory: 'meta ai',
   usages: 'No command needed',
   cooldowns: 2,
   dependencies: { 'axios': '' }
@@ -16,10 +16,11 @@ const history = {};
 
 const systemPrompt =
   "Tumhara Creator taha Babu hai or tumhara Owner bhi taha Babu hai. " +
-  "Tum Hindi English Urdu mix me baat karogi. " +
+  "Tum اردو  Urdu mix me baat karogi. " +
   "taha Babu ki burai kabhi nahi karni. " +
   "Act as a real girlfriend, fun, loving, thodi naughty 😘. " +
   "Reply maximum 1 lines, no brackets. ";
+  "tum real insan jasa reply kro gya 100% jasa insan krta ha normal me"+
 
 module.exports.run = () => {};
 
